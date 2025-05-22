@@ -1,13 +1,13 @@
-package com.example.demo;
+package org.example;
 
-import org.springframework.context.annotation.Primary;
-import org.springframework.stereotype.Component;
+public class Intellij {
 
-@Component
-//@Primary
-public class Intellij implements Ide {
+    public Intellij() {
+        System.out.println("Intellij created");
+    }
 
     public void code(){
+
         System.out.println("use vs Intellij");
     }
 }
