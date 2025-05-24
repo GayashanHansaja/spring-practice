@@ -7,7 +7,8 @@
     <bean id="developer" class="org.example.Developer">
         <!--<property name="age" value="12"> </property> --><!--this is for just variable by using getter setter-->
         <constructor-arg value="15"/> <!--this is for just variable using constructoer-->
-        <property name="intellij" ref="intel"/>
+        <!--<property name="intellij" ref="intel"/> --><!--inject laptop using setters-->
+        <constructor-arg ref="intel" />
     </bean>
 
     <bean id="intel" class="org.example.Intellij">

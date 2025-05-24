@@ -22,8 +22,9 @@ public class Developer {
     }
 
     //what if i need to set age usign constructor
-    public  Developer(int age) {
+    public  Developer(Intellij intellij, int age) {
         this.age = age;
+        this.intellij = intellij;
         System.out.println("Developer created");
     }
 
