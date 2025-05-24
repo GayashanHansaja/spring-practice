@@ -16,5 +16,9 @@ public class App
 
         Developer developer = (Developer)context.getBean("developer");
         developer.build();
+
+        //instead of set values to developer age  we can use spring to do that in spring xml , we inject value instead asigning
+        /*System.out.print(developer.getAge());*/
+
     }
 }

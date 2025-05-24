@@ -5,12 +5,12 @@
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean id="developer" class="org.example.Developer">
+        <!--<property name="age" value="12"> </property> --><!--this is for just variable by using getter setter-->
+        <constructor-arg value="15"/> <!--this is for just variable using constructoer-->
+        <property name="intellij" ref="intel"/>
     </bean>
 
-    <bean id="intellij" class="org.example.Intellij">
-    </bean>
-
-    <bean id="intellij2" class="org.example.Intellij">
+    <bean id="intel" class="org.example.Intellij">
     </bean>
 
 </beans>
