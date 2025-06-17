@@ -5,7 +5,7 @@ public class Developer {
 
     private int age = 30;
     //when need to take objec like another class,not like asigning varibale
-    private Intellij intellij;
+    private ide myide;
 
     public int getAge() {
         return age;
@@ -14,22 +14,22 @@ public class Developer {
         this.age = age;
     }
 
-    public Intellij getIntellij() {
-        return intellij;
+    public ide getmyide() {
+        return myide;
     }
-    public void setIntellij(Intellij intellij) {
-        this.intellij = intellij;
+    public void setMyide( ide myide) {
+        this.myide = myide;
     }
 
     //what if i need to set age usign constructor
-    public  Developer(Intellij intellij, int age) {
+/*    public  Developer(ide myide, int age) {
         this.age = age;
-        this.intellij = intellij;
+        this.myide = myide;
         System.out.println("Developer created");
-    }
+    }*/
 
     public void build(){
         System.out.println("Building app");
-        intellij.code();
+        myide.code();
     }
 }
