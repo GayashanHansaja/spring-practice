@@ -14,7 +14,7 @@ public class App
         //this application context doesnt come with spring because it is a third party library, and spring have to configure it manualy
         ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
 
-        Developer developer = (Developer)context.getBean("developer");
+        Developer developer = (Developer)context.getBean(Developer.class);
         developer.build();
 
         //instead of set values to developer age  we can use spring to do that in spring xml , we inject value instead asigning

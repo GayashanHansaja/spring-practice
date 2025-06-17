@@ -1,6 +1,6 @@
 package org.example;
 
-public class Intellij {
+public class Intellij implements ide {
 
     public Intellij() {
         System.out.println("Intellij created");
@@ -8,6 +8,6 @@ public class Intellij {
 
     public void code(){
 
-        System.out.println("use vs Intellij");
+        System.out.println("use Intellij");
     }
 }

@@ -4,14 +4,18 @@
        xsi:schemaLocation="
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="developer" class="org.example.Developer">
+    <bean id="developer" class="org.example.Developer" autowire="byType">
         <!--<property name="age" value="12"> </property> --><!--this is for just variable by using getter setter-->
-        <constructor-arg value="15"/> <!--this is for just variable using constructoer-->
+        <!--<constructor-arg value="15"/>--> <!--this is for just variable using constructoer-->
         <!--<property name="intellij" ref="intel"/> --><!--inject laptop using setters-->
-        <constructor-arg ref="intel" />
+        <!--<constructor-arg ref="intel" />-->
+        <!--this section is for autowiring-->
+        <!--<property name="myide" ref="intel"/>-->
     </bean>
 
-    <bean id="intel" class="org.example.Intellij">
+    <bean id="myide" class="org.example.vscode" primary="true" >
+    </bean>
+    <bean id="myide1" class="org.example.Intellij">
     </bean>
 
 </beans>
