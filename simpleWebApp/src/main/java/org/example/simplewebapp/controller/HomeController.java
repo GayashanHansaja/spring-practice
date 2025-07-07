@@ -1,4 +1,4 @@
-package org.example.simplewebapp;
+package org.example.simplewebapp.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
