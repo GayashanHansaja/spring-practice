@@ -11,14 +11,37 @@ import java.util.List;
 public class ProductService {
 
     List<Product> products = new ArrayList<>();{
-        products.add(new Product("1", "Laptop", 1000));
-        products.add(new Product("2", "Smartphone", 500));
-        products.add(new Product("3", "Tablet", 300));
-        products.add(new Product("4", "Smartwatch", 200));
-        products.add(new Product("5", "Headphones", 150));
+        products.add(new Product(1, "Laptop", 1000));
+        products.add(new Product(2, "Smartphone", 500));
+        products.add(new Product(3, "Tablet", 300));
+        products.add(new Product(4, "Smartwatch", 200));
+        products.add(new Product(5, "Headphones", 150));
     }
 
     public List<Product> getProducts() {
         return products;
+    }
+
+    public Product getProductById(int id) {
+        for (Product product : products) {
+            if (product.getId() == id) {
+                return product;
+            }
+        }
+        return null; // or throw an exception if not found
+        /* Alternatively, you can use Java Streams:
+        return products.stream()
+                .filter(p -> p.getId() == id)
+                .findFirst()
+                .orElse(null); // or throw an exception if not found
+        */
+    }
+
+    public void addProduct(Product product) {
+        if(product != null ){
+            products.add(product);
+        } else {
+            throw new IllegalArgumentException("Product cannot be null");
+        }
     }
 }
