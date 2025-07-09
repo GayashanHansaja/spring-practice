@@ -44,4 +44,24 @@ public class ProductService {
             throw new IllegalArgumentException("Product cannot be null");
         }
     }
+
+    public void deleteProduct(int id) {
+        for (int i = 0; i < products.size(); i++) {
+            if (products.get(i).getId() == id) {
+                products.remove(i);
+                break;
+            }
+            }
+        }
+
+    public void updateProduct(int id, Product product) {
+        for (int i = 0; i < products.size(); i++) {
+            if (products.get(i).getId() == id) {
+                products.set(i, product);
+                return;
+            }
+        }
+        throw new IllegalArgumentException("Product with id " + id + " not found");
+
+    }
 }
