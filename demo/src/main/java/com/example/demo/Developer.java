@@ -25,7 +25,7 @@ public class Developer {
 
     // now there are two type of beans with same interface.so to over come that we have to prioratize one with @primary or @qualifier
 
-    public void build(){
+    public void build() {
         ide.code();
         System.out.println("Building app");
     }
