@@ -1,6 +1,7 @@
 package org.example.ecom.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,6 +16,7 @@ import java.util.Date;
 public class Product {
 
     @Id
+    @GeneratedValue (strategy = jakarta.persistence.GenerationType.IDENTITY)
     private int id;
     private String name;
     private String description;
@@ -24,6 +26,5 @@ public class Product {
     private Date releaseDate;
     private boolean available;
     private int quantity;
-    private String imageUrl;
 
 }
