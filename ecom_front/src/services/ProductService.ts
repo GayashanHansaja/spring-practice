@@ -44,4 +44,27 @@ export class ProductService {
       return MockProductService.getProductsByCategory(category);
     }
   }
+
+  static async createProduct(product: Omit<Product, 'id'>): Promise<Product> {
+    try {
+      const response = await fetch(`${API_BASE_URL}/products`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(product),
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return await response.json();
+    } catch (error) {
+      console.warn('Backend not available, using mock data:', error);
+      // Return the product with a generated ID for mock purposes
+      return {
+        ...product,
+        id: Date.now(),
+      } as Product;
+    }
+  }
 }

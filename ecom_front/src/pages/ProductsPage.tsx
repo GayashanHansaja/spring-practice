@@ -3,6 +3,8 @@ import type { Product } from '../types/Product';
 import { ProductService } from '../services/ProductService';
 import ProductGrid from '../components/ProductGrid';
 import SearchAndFilter from '../components/SearchAndFilter';
+import ProductDetail from '../components/ProductDetail';
+import AddProduct from '../components/AddProduct';
 
 export default function ProductsPage() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -10,6 +12,8 @@ export default function ProductsPage() {
   const [error, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedProductId, setSelectedProductId] = useState<number | null>(null);
+  const [showAddProduct, setShowAddProduct] = useState(false);
 
   // Fetch products from the backend
   useEffect(() => {
@@ -51,8 +55,24 @@ export default function ProductsPage() {
 
   const handleProductClick = (product: Product) => {
     console.log('Product clicked:', product);
-    // You can implement navigation to product detail page here
-    // For example: navigate(`/products/${product.id}`);
+    setSelectedProductId(product.id);
+  };
+
+  const handleCloseProductDetail = () => {
+    setSelectedProductId(null);
+  };
+
+  const handleShowAddProduct = () => {
+    setShowAddProduct(true);
+  };
+
+  const handleCloseAddProduct = () => {
+    setShowAddProduct(false);
+  };
+
+  const handleProductAdded = (newProduct: Product) => {
+    setProducts(prevProducts => [newProduct, ...prevProducts]);
+    setShowAddProduct(false);
   };
 
   const handleRefresh = async () => {
@@ -76,16 +96,27 @@ export default function ProductsPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <h1 className="text-2xl font-bold text-gray-900">Our Products</h1>
-            <button
-              onClick={handleRefresh}
-              disabled={loading}
-              className="flex items-center px-4 py-2 text-sm font-medium text-blue-600 bg-blue-100 rounded-md hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              <svg className={`w-4 h-4 mr-2 ${loading ? 'animate-spin' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-              </svg>
-              Refresh
-            </button>
+            <div className="flex items-center space-x-4">
+              <button
+                onClick={handleShowAddProduct}
+                className="flex items-center px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+              >
+                <svg className="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                </svg>
+                Add Product
+              </button>
+              <button
+                onClick={handleRefresh}
+                disabled={loading}
+                className="flex items-center px-4 py-2 text-sm font-medium text-blue-600 bg-blue-100 rounded-md hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <svg className={`w-4 h-4 mr-2 ${loading ? 'animate-spin' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                </svg>
+                Refresh
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -146,6 +177,22 @@ export default function ProductsPage() {
           onProductClick={handleProductClick}
         />
       </div>
+
+      {/* Product Detail Modal */}
+      {selectedProductId && (
+        <ProductDetail
+          productId={selectedProductId}
+          onClose={handleCloseProductDetail}
+        />
+      )}
+
+      {/* Add Product Modal */}
+      {showAddProduct && (
+        <AddProduct
+          onProductAdded={handleProductAdded}
+          onClose={handleCloseAddProduct}
+        />
+      )}
     </div>
   );
 }

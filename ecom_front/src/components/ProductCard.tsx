@@ -19,7 +19,7 @@ export default function ProductCard({ product, onProductClick }: ProductCardProp
     >
       <div className="aspect-w-16 aspect-h-12 overflow-hidden">
         <img
-          src={product.imageUrl || '/placeholder-image.jpg'}
+          src={product.imageUrl || "/placeholder-image.jpg"}
           alt={product.name}
           className="w-full h-48 object-cover hover:scale-105 transition-transform duration-300"
           onError={(e) => {
@@ -38,6 +38,16 @@ export default function ProductCard({ product, onProductClick }: ProductCardProp
         </p>
         
         <div className="flex items-center justify-between mb-2">
+          <span className="text-2xl font-bold text-blue-600">
+            LKR {product.price.toFixed(2)}
+          </span>
+          
+          <span className="text-sm text-gray-600">
+            Brand: {product.brand}
+          </span>
+        </div>
+        
+{/*         <div className="flex items-center justify-between mb-2">
           <span className="text-2xl font-bold text-blue-600">
             ${product.price.toFixed(2)}
           </span>
@@ -63,7 +73,7 @@ export default function ProductCard({ product, onProductClick }: ProductCardProp
               </span>
             </div>
           )}
-        </div>
+        </div> */}
         
         <div className="flex items-center justify-between">
           {product.category && (
@@ -74,12 +84,15 @@ export default function ProductCard({ product, onProductClick }: ProductCardProp
           
           <div className="flex items-center">
             <div className={`w-2 h-2 rounded-full mr-2 ${
-              product.inStock !== false ? 'bg-green-400' : 'bg-red-400'
+              product.available !== false ? 'bg-green-400' : 'bg-red-400'
             }`}></div>
             <span className={`text-xs ${
-              product.inStock !== false ? 'text-green-600' : 'text-red-600'
+              product.available !== false ? 'text-green-600' : 'text-red-600'
             }`}>
-              {product.inStock !== false ? 'In Stock' : 'Out of Stock'}
+              {product.available !== false ? 'In Stock' : 'Out of Stock'}
+            </span>
+            <span className="ml-2 text-xs text-gray-500">
+              Qty: {product.quantity}
             </span>
           </div>
         </div>
