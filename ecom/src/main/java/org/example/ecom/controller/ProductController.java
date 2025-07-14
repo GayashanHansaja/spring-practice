@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -29,7 +30,19 @@ public class ProductController {
         Product product = productService.getProductById(id);
         if(product != null) {
             return new ResponseEntity<>(product, HttpStatus.OK);
-        }else
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
+    @PostMapping("/products")
+    public ResponseEntity<?> addProduct(@RequestPart Product product,
+                                              @RequestPart MultipartFile image) {
+        try {
+            Product product1 = productService.addProduct(product, image);
+            return new ResponseEntity<>(product1, HttpStatus.OK);
+        }catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
+        }
+    }
+
 }
