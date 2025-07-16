@@ -22,14 +22,14 @@ public class ProductService {
         return productRepo.findById((long) id).orElse(null);
     }
 
-    public Product addProduct(Product product, MultipartFile image) {
+    public Product addProduct(Product product/*, MultipartFile image*/) {
         try {
-            product.setImageName(image.getOriginalFilename());
+            /*product.setImageName(image.getOriginalFilename());
             product.setImageType(image.getContentType());
-            product.setImage(image.getBytes());
+            product.setImage(image.getBytes());*/
             return productRepo.save(product);
         } catch (Exception e) {
             throw new RuntimeException("Failed to save product: " + e.getMessage());
-        } 
+        }
     }
 }

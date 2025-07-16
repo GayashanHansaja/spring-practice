@@ -8,5 +8,7 @@ export interface Product {
   releaseDate: Date;
   available?: boolean;
   quantity: number;
-  imageUrl?: string;
+  imageName?: string;
+  imageType?: string;
+  image?: string; // Base64 encoded image data for frontend display
 }

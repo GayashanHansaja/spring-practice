@@ -35,10 +35,10 @@ public class ProductController {
         }
     }
     @PostMapping("/products")
-    public ResponseEntity<?> addProduct(@RequestPart Product product,
-                                              @RequestPart MultipartFile image) {
+    public ResponseEntity<?> addProduct(@RequestBody Product product) {
         try {
-            Product product1 = productService.addProduct(product, image);
+            System.out.println("Adding product: " + product);
+            Product product1 = productService.addProduct(product);
             return new ResponseEntity<>(product1, HttpStatus.OK);
         }catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);

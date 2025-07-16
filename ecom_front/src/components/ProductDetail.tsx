@@ -105,7 +105,11 @@ export default function ProductDetail({ productId, onClose }: ProductDetailProps
             {/* Product Image */}
             <div className="aspect-square overflow-hidden rounded-lg bg-gray-100">
               <img
-                src={product.imageUrl || "/placeholder-image.jpg"}
+                src={
+                  product.image 
+                    ? `data:${product.imageType || 'image/jpeg'};base64,${product.image}`
+                    : "/placeholder-image.jpg"
+                }
                 alt={product.name}
                 className="w-full h-full object-cover"
                 onError={(e) => {
@@ -124,7 +128,7 @@ export default function ProductDetail({ productId, onClose }: ProductDetailProps
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
                   <span className="text-3xl font-bold text-blue-600">
-                    LKR {product.price.toFixed(2)}
+                    LKR {product.price.toFixed(0)}
                   </span>
                   <div className={`flex items-center px-3 py-1 rounded-full text-sm ${
                     product.available !== false 
@@ -188,7 +192,7 @@ export default function ProductDetail({ productId, onClose }: ProductDetailProps
                     onClick={handleAddToCart}
                     className="w-full bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors font-medium text-lg"
                   >
-                    Add to Cart - LKR {(product.price * quantity).toFixed(2)}
+                    Add to Cart - LKR {(product.price * quantity).toFixed(0)}
                   </button>
                 </div>
               )}

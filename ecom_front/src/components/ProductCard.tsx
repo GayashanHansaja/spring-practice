@@ -19,7 +19,11 @@ export default function ProductCard({ product, onProductClick }: ProductCardProp
     >
       <div className="aspect-w-16 aspect-h-12 overflow-hidden">
         <img
-          src={product.imageUrl || "/placeholder-image.jpg"}
+          src={
+            product.image 
+              ? `data:${product.imageType || 'image/jpeg'};base64,${product.image}`
+              : "/placeholder-image.jpg"
+          }
           alt={product.name}
           className="w-full h-48 object-cover hover:scale-105 transition-transform duration-300"
           onError={(e) => {
@@ -39,7 +43,7 @@ export default function ProductCard({ product, onProductClick }: ProductCardProp
         
         <div className="flex items-center justify-between mb-2">
           <span className="text-2xl font-bold text-blue-600">
-            LKR {product.price.toFixed(2)}
+            LKR {product.price.toFixed(0)}
           </span>
           
           <span className="text-sm text-gray-600">
