@@ -5,6 +5,7 @@ import ProductGrid from '../components/ProductGrid';
 import SearchAndFilter from '../components/SearchAndFilter';
 import ProductDetail from '../components/ProductDetail';
 import AddProduct from '../components/AddProduct';
+import UpdateProduct from '../components/UpdateProduct';
 
 export default function ProductsPage() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -14,6 +15,9 @@ export default function ProductsPage() {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedProductId, setSelectedProductId] = useState<number | null>(null);
   const [showAddProduct, setShowAddProduct] = useState(false);
+  const [showUpdateProduct, setShowUpdateProduct] = useState(false);
+  const [productToUpdate, setProductToUpdate] = useState<Product | null>(null);
+  const [showManageMode, setShowManageMode] = useState(false);
 
   // Fetch products from the backend
   useEffect(() => {
@@ -89,6 +93,40 @@ export default function ProductsPage() {
     }
   };
 
+  const handleEditProduct = (product: Product) => {
+    setProductToUpdate(product);
+    setShowUpdateProduct(true);
+  };
+
+  const handleCloseUpdateProduct = () => {
+    setShowUpdateProduct(false);
+    setProductToUpdate(null);
+  };
+
+  const handleProductUpdated = (updatedProduct: Product) => {
+    setProducts(prevProducts =>
+      prevProducts.map(product =>
+        product.id === updatedProduct.id ? updatedProduct : product
+      )
+    );
+    setShowUpdateProduct(false);
+    setProductToUpdate(null);
+  };
+
+  const handleDeleteProduct = async (productId: number) => {
+    try {
+      await ProductService.deleteProduct(productId);
+      setProducts(prevProducts => prevProducts.filter(product => product.id !== productId));
+      // Close product detail modal if the deleted product was being viewed
+      if (selectedProductId === productId) {
+        setSelectedProductId(null);
+      }
+    } catch (err) {
+      console.error('Error deleting product:', err);
+      alert('Failed to delete product. Please try again.');
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
@@ -97,6 +135,19 @@ export default function ProductsPage() {
           <div className="flex items-center justify-between h-16">
             <h1 className="text-2xl font-bold text-gray-900">Our Products</h1>
             <div className="flex items-center space-x-4">
+              <button
+                onClick={() => setShowManageMode(!showManageMode)}
+                className={`flex items-center px-4 py-2 text-sm font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 transition-colors ${
+                  showManageMode
+                    ? 'text-white bg-purple-600 hover:bg-purple-700 focus:ring-purple-500'
+                    : 'text-purple-600 bg-purple-100 hover:bg-purple-200 focus:ring-purple-500'
+                }`}
+              >
+                <svg className="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4" />
+                </svg>
+                {showManageMode ? 'View Mode' : 'Manage Mode'}
+              </button>
               <button
                 onClick={handleShowAddProduct}
                 className="flex items-center px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
@@ -175,6 +226,9 @@ export default function ProductsPage() {
           products={filteredProducts}
           loading={loading}
           onProductClick={handleProductClick}
+          onEdit={handleEditProduct}
+          onDelete={handleDeleteProduct}
+          showActions={showManageMode}
         />
       </div>
 
@@ -191,6 +245,15 @@ export default function ProductsPage() {
         <AddProduct
           onProductAdded={handleProductAdded}
           onClose={handleCloseAddProduct}
+        />
+      )}
+
+      {/* Update Product Modal */}
+      {showUpdateProduct && productToUpdate && (
+        <UpdateProduct
+          product={productToUpdate}
+          onProductUpdated={handleProductUpdated}
+          onClose={handleCloseUpdateProduct}
         />
       )}
     </div>

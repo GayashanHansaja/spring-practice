@@ -45,4 +45,27 @@ public class ProductController {
         }
     }
 
+    @PutMapping("/products/{id}")
+    public ResponseEntity<?> updateProduct(@PathVariable int id, @RequestBody Product product) {
+        Product existingProduct = productService.getProductById(id);
+        if (existingProduct != null) {
+            product.setId(id);
+            Product updatedProduct = productService.addProduct(product);
+            return new ResponseEntity<>(updatedProduct, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Product not found", HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @DeleteMapping("/products/{id}")
+    public ResponseEntity<?> deleteProduct(@PathVariable int id) {
+        Product product = productService.getProductById(id);
+        if(product != null) {
+            productService.deleteProduct(id);
+            return new ResponseEntity<>("Product deleted successfully", HttpStatus.OK);
+        }else  {
+            return new ResponseEntity<>("Product not found", HttpStatus.NOT_FOUND);
+        }
+    }
+
 }

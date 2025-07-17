@@ -32,4 +32,14 @@ public class ProductService {
             throw new RuntimeException("Failed to save product: " + e.getMessage());
         }
     }
+
+
+    public void deleteProduct(int id) {
+        Product product = getProductById(id);
+        if (product != null) {
+            productRepo.delete(product);
+        } else {
+            throw new RuntimeException("Product not found with id: " + id);
+        }
+    }
 }

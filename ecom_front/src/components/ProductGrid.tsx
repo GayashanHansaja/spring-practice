@@ -5,9 +5,12 @@ interface ProductGridProps {
   products: Product[];
   loading?: boolean;
   onProductClick?: (product: Product) => void;
+  onEdit?: (product: Product) => void;
+  onDelete?: (productId: number) => void;
+  showActions?: boolean;
 }
 
-export default function ProductGrid({ products, loading = false, onProductClick }: ProductGridProps) {
+export default function ProductGrid({ products, loading = false, onProductClick, onEdit, onDelete, showActions = false }: ProductGridProps) {
   if (loading) {
     return (
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -46,6 +49,9 @@ export default function ProductGrid({ products, loading = false, onProductClick 
           key={product.id}
           product={product}
           onProductClick={onProductClick}
+          onEdit={onEdit}
+          onDelete={onDelete}
+          showActions={showActions}
         />
       ))}
     </div>

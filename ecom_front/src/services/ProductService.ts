@@ -67,4 +67,42 @@ export class ProductService {
       } as Product;
     }
   }
+
+  static async updateProduct(id: number, product: Omit<Product, 'id'>): Promise<Product> {
+    try {
+      const response = await fetch(`${API_BASE_URL}/products/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(product),
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return await response.json();
+    } catch (error) {
+      console.warn('Backend not available, using mock data:', error);
+      // Return the updated product for mock purposes
+      return {
+        ...product,
+        id: id,
+      } as Product;
+    }
+  }
+
+  static async deleteProduct(id: number): Promise<void> {
+    try {
+      const response = await fetch(`${API_BASE_URL}/products/${id}`, {
+        method: 'DELETE',
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+    } catch (error) {
+      console.warn('Backend not available, using mock data:', error);
+      // For mock purposes, we'll just log the deletion
+      console.log(`Mock: Product with id ${id} deleted`);
+    }
+  }
 }
