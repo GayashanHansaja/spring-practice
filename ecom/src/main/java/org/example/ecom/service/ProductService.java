@@ -42,4 +42,8 @@ public class ProductService {
             throw new RuntimeException("Product not found with id: " + id);
         }
     }
+
+    public List<Product> searchProduct(String keyword) {
+        return productRepo.searchProduct(keyword);
+    }
 }
