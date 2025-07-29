@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 //@Primary
 public class Intellij implements Ide {
 
-    public void code(){
+    public void code() {
         System.out.println("use vs Intellij");
     }
 }
