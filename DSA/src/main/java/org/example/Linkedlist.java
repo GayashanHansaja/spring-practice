@@ -10,7 +10,7 @@ public class Linkedlist {
      list.addFirst(0);
      list.addLast(4);
 
-     list.remove(0);
+     list.removeFirst();
 
      System.out.println(list);
  }
