@@ -1,11 +1,14 @@
 package org.example.ecom.controller;
 
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
 import org.example.ecom.model.Product;
 import org.example.ecom.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -71,6 +74,10 @@ public class ProductController {
     public ResponseEntity <List<Product>> searchProduct(@PathVariable String Keyword) {
         List<Product> products = productService.searchProduct(Keyword);
         return new ResponseEntity<>(products, HttpStatus.OK);
+    }
+    @GetMapping("/csrf-token")
+    public CsrfToken getCsrfToken (HttpServletRequest request){
+        return (CsrfToken) request.getAttribute("_csrf");
     }
 
 }
